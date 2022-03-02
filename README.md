@@ -20,17 +20,17 @@ starting file can be found [here:](https://github.com/Cwarcup/notes/blob/1497a91
   // ...
 }
 ```
-5. Can now run `tsc` to compile the TS. Better option is to use:
+5. Can now run `tsc -w` to compile the TS. Better option is to use:
 ```
 tsc -w
 ```
 > -w flag is used to "watch" the files in side the files in the rootDir (src for us). This means we will not constantly need to run `tsc`. It allows us to **continuously compile code**. 
 
-6. run JavaScript files, but needs to be done manmually.
+6. run JavaScript files, but needs to be done manually.
 ```
 node build/index.js
 ```
-7. run file with [Nodemon](https://www.npmjs.com/package/nodemon) and [Concurrently](https://www.npmjs.com/package/concurrently)
+7. run file with [Nodemon](https://www.npmjs.com/package/nodemon) and [Concurrently](https://www.npmjs.com/package/concurrently). Open second terminal window in the same directory. We will want `tsc -w` to be running in the previous window.
 ```
 npm init -y
 
@@ -48,3 +48,14 @@ npm i concurrently
   },
 ```
 > "start": "concurrently npm:start:*" tells concurrently to run anything that starts with "start". 
+
+After Setup:
+```
+$ tsc -w 
+// make sure any saved files produce a new index.js file in build directory.
+
+$ npm start
+// starts nodemon.
+// nodemon looks in /build to run index.js
+```
+
