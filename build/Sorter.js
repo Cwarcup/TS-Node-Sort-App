@@ -1,4 +1,6 @@
 "use strict";
+// interface
+// sorter class and function
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Sorter = void 0;
 class Sorter {

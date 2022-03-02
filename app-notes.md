@@ -334,3 +334,37 @@ console.log(charactersCollection.data);
 ```
 
 Can now run our code in terminal which returns `aabXy `.
+
+## Linked List Implementation
+
+> copied code for linkedList 
+
+Update `index.ts`
+```typescript
+import { Sorter } from './Sorter';
+import { NumbersCollection } from './NumbersCollection';
+import { CharactersCollection } from './CharactersCollection';
+import { LinkedList } from './LinkedList';
+
+
+// const numbersCollection = new NumbersCollection([10,3,-5,0,-100, 999]);
+// const sorter = new Sorter(numbersCollection);
+// sorter.sort();
+// console.log(numbersCollection.data);
+
+// const charactersCollection = new CharactersCollection('Xaayb');
+// const sorter = new Sorter(charactersCollection);
+// sorter.sort();
+// console.log(charactersCollection.data);
+
+const linkedList = new LinkedList();
+linkedList.add(500);
+linkedList.add(-10);
+linkedList.add(-3);
+linkedList.add(4);
+linkedList.add(80);
+
+const sorter = new Sorter(linkedList);
+sorter.sort();
+linkedList.print()
+```

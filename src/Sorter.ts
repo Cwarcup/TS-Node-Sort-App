@@ -1,3 +1,6 @@
+// interface
+// sorter class and function
+
 interface Sortable {
   length: number;
   compare(leftIndex: number, rightIndex: number): boolean;
