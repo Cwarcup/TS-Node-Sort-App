@@ -1,4 +1,5 @@
 "use strict";
+// sort array of numbers
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NumbersCollection = void 0;
 class NumbersCollection {

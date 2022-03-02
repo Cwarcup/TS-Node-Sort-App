@@ -1,3 +1,5 @@
+// sort array of numbers
+
 export class NumbersCollection {
   data: number[];
 

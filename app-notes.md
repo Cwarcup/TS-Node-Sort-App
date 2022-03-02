@@ -224,3 +224,113 @@ export class Sorter {
 ```
 6. import the `Sorter` and `NumbersCollection` into the `index.ts`.
 ```typescript
+//indtex.ts file
+import { Sorter } from './Sorter';
+import { NumbersCollection } from './NumbersCollection';;
+
+const numbersCollection = new NumbersCollection([10,3,-5,0,-100]);
+const sorter = new Sorter(numbersCollection);
+sorter.sort();
+console.log(numbersCollection.data);
+```
+
+---
+Now we can actually run this and output will be in terminal.
+```
+tsc -w
+
+npm start
+```
+---
+
+#### Updating Sorter to accept any data
+- want to be able to accept any data with a property of... you can be `Sorted`.
+  - length
+  - compare method
+  - swap method
+
+![sorter](https://github.com/Cwarcup/notes/images/Typescript-images/sorter.png)
+
+- need to create a `CharacterCollection.ts` for strings.
+- create `LinkedList.ts` for linked lists.
+
+### Define Interface in Sorter
+
+>As long as data has these properties, you can be sorted.
+```typescript
+interface Sortable {
+  length: number;
+  compare(leftIndex: number, rightIndex: number): boolean;
+  swap(leftIndex: number, rightIndex: number): void;
+}
+
+export class Sorter {
+  constructor(public collection: Sortable ) {}
+  
+  sort(): void {
+    const { length } = this.collection;
+
+    for(let i = 0; i < length; i++) {
+      for(let j = 0; j < length - i - 1; j++) {
+        if(this.collection.compare(j, j+1)) {         
+          this.collection.swap(j, j+1);
+        }
+      }
+    } 
+  }
+}
+```
+> can delete the import statement in Sorter.ts.
+> change constructor(public collection: Sortable ) {}.
+
+
+Create `CharacterCollection.ts` file
+```typescript
+// sort strings
+
+export class CharactersCollection {
+  constructor(public data: string) {}
+
+  get length(): number {
+    return this.data.length;
+  }
+
+  //remember, when we compare, js uses the charCode to compare strings.
+  compare(leftIndex: number, rightIndex: number): boolean {
+    return this.data[leftIndex].toLowerCase() > this.data[rightIndex].toLowerCase();
+  }
+
+  swap(leftIndex: number, rightIndex: number): void {
+    //split string and for an array of characters
+    const characters = this.data.split('');
+    //swap
+    const leftHand = characters[leftIndex];
+    characters[leftIndex] = characters[rightIndex];
+    characters[rightIndex] = leftHand;
+
+    this.data = characters.join('');
+  }
+
+}
+```
+
+Update the `index.ts` file to import `CharacterCollection.ts`.
+
+```typescript
+import { Sorter } from './Sorter';
+import { NumbersCollection } from './NumbersCollection';
+import { CharactersCollection } from './CharactersCollection';
+
+
+// const numbersCollection = new NumbersCollection([10,3,-5,0,-100, 999]);
+// const sorter = new Sorter(numbersCollection);
+// sorter.sort();
+// console.log(numbersCollection.data);
+
+const charactersCollection = new CharactersCollection('Xaayb');
+const sorter = new Sorter(charactersCollection);
+sorter.sort();
+console.log(charactersCollection.data);
+```
+
+Can now run our code in terminal which returns `aabXy `.
