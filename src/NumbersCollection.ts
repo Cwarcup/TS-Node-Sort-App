@@ -1,10 +1,10 @@
 // sort array of numbers
+import {Sorter} from './Sorter'
 
-export class NumbersCollection {
-  data: number[];
+export class NumbersCollection extends Sorter {
 
-  constructor(data: number[]) {
-    this.data = data
+  constructor(public data: number[]) {
+    super()
   }
 
   get length(): number {
@@ -21,5 +21,3 @@ export class NumbersCollection {
     this.data[rightIndex] = leftHand;
   }
 }
-
-const collection = new NumbersCollection([1,2,3]);

@@ -368,3 +368,69 @@ const sorter = new Sorter(linkedList);
 sorter.sort();
 linkedList.print()
 ```
+
+## Integrating Sort Method
+- want to be able to just run `sort` and make it available on the different collections. 
+- Can use **inheritance** for this.
+  - Sorter will be the 'super' class in each of our collections. 
+```typescript
+//NumbersCollection.ts
+import {Sorter} from './Sorter'
+
+export class NumbersCollection extends Sorter {
+
+  constructor(public data: number[]) {
+    super()
+  }
+
+  get length(): number {
+    return this.data.length;
+  }
+
+  compare(leftIndex: number, rightIndex: number): boolean {
+    return this.data[leftIndex] > this.data[rightIndex];
+  }
+
+  swap(leftIndex: number, rightIndex: number): void {
+    const leftHand = this.data[leftIndex];
+    this.data[leftIndex] = this.data[rightIndex];
+    this.data[rightIndex] = leftHand;
+  }
+}
+
+//Sorter.ts
+interface Sortable {
+  length: number;
+  compare(leftIndex: number, rightIndex: number): boolean;
+  swap(leftIndex: number, rightIndex: number): void;
+}
+
+export class Sorter {
+  
+  sort(): void {
+    const { length } = this;
+
+    for(let i = 0; i < length; i++) {
+      for(let j = 0; j < length - i - 1; j++) {
+        if(this.compare(j, j+1)) {         
+          this.swap(j, j+1);
+        }
+      }
+    } 
+  }
+}
+```
+> But now we get an error on `this.compare` and `this.swap` because TypeScript does not see the Sorter class with these methods. However, we know that these methods are available in the NumbersCollection, LinkedList, and CharactersCollection. 
+
+## Abstract Classes
+- changing Sorter from a normal class to an **abstract class.**
+- **Abstract Classes**
+  - Can't be used to create an object directly.
+    - can't do `const sorter = new Sorter(numbersCollection);`.
+  - Only used as a **parent class**.
+  - Can contain **real implementations** for some methods.
+  - The implemented methods can refer to the other methods that don't actually exist yet (we still have to provide names and types for the un-implemented methods).
+    - in our case `{ length }`, `this.compare` and `this.swap`.
+  - Can make child classes promise to implement some other method. 
+
+![Abstract Classes](https://github.com/Cwarcup/notes/images/Typescript-images/abstractClasses.png)
