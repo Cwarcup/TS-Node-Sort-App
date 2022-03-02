@@ -1,6 +1,8 @@
 # TS-Node-Sort-App
  Second  design patterns application from Typescript: The Complete Developer's Guide
 
+ [Notes for app development](https://github.com/Cwarcup/TS-Node-Sort-App/blob/main/app-notes.md)
+
 starting file can be found [here:](https://github.com/Cwarcup/notes/blob/1497a91a56c0f6b17e9596908ad4083ed85872ce/root/typescript/Reusable-TS-Snippets/new-TS-project-template)
 
 1. create **tsconfig** file

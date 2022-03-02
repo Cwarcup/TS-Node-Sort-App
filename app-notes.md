@@ -249,7 +249,7 @@ npm start
   - compare method
   - swap method
 
-![sorter](https://github.com/Cwarcup/notes/images/Typescript-images/sorter.png)
+![Sorter](https://github.com/Cwarcup/notes/blob/9419b1dd182374b56658dc29030cce2d03c43d57/images/Typescript-images/sorter.png)
 
 - need to create a `CharacterCollection.ts` for strings.
 - create `LinkedList.ts` for linked lists.
@@ -433,4 +433,4 @@ export class Sorter {
     - in our case `{ length }`, `this.compare` and `this.swap`.
   - Can make child classes promise to implement some other method. 
 
-![Abstract Classes](https://github.com/Cwarcup/notes/images/Typescript-images/abstractClasses.png)
+![Abstract Classes](https://github.com/Cwarcup/notes/blob/36c8f0f354f834443f540fe9664050601eb0fed8/images/Typescript-images/abstractClasses.png)
