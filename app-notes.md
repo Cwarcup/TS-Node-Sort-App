@@ -434,3 +434,51 @@ export class Sorter {
   - Can make child classes promise to implement some other method. 
 
 ![Abstract Classes](https://github.com/Cwarcup/notes/blob/36c8f0f354f834443f540fe9664050601eb0fed8/images/Typescript-images/abstractClasses.png)
+
+Implementing into our code
+```typescript
+interface Sortable {
+  length: number;
+  compare(leftIndex: number, rightIndex: number): boolean;
+  swap(leftIndex: number, rightIndex: number): void;
+}
+
+export abstract class Sorter {
+
+  abstract compare(leftIndex: number, rightIndex: number): boolean;
+  abstract swap(leftIndex: number, rightIndex: number): void
+  abstract length: number;
+  
+  sort(): void {
+    const { length } = this;
+
+    for(let i = 0; i < length; i++) {
+      for(let j = 0; j < length - i - 1; j++) {
+        if(this.compare(j, j+1)) {         
+          this.swap(j, j+1);
+        }
+      }
+    } 
+  }
+}
+```
+- add **'abstract'** keyword to the class.
+
+Now we can run sort() on numbersCollection
+```
+const numbersCollection = new NumbersCollection([10,3,-5,0,-100, 999]);
+numbersCollection.sort();
+console.log(numbersCollection.data); // [ -100, -5, 0, 3, 10, 999 ]
+```
+
+---
+Now need to implement the extension to the other collections. 
+- for the LinkedList class, we do NOT need to add `super()` because it does NOT have a constructor. 
+
+## Interfaces vs Abstract Classes
+
+![image](https://github.com/Cwarcup/notes/blob/c5c915a5437e76257c284a9db640cec8fc31d5f5/images/Typescript-images/interfacesVsAbstract.png)
+
+- Always use **interfaces** first, since it promotes code reuse. 
+- Use Abstract classes when you have different objects that are closely related.
+  - share MOST of the sane methods.
