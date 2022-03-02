@@ -140,4 +140,87 @@ class Sorter {
 
 Guards:  we use type Guards any time we want to **restore** **access** to a set of properties in a **union type**, which is what we have right here.
 > `collection: number[] | string`.
-> union = '|' "or".****
+> union = '|' "or".
+
+However, this is **bad code**. If we ever wanted to add a data type to be worsted, we need additional `if` statements for every single type of data. 
+
+## Better Solution
+
+- will no longer have the `Sorter` refer to numbers[] or strings.
+- will have it refer to a new `NumbersCollection.ts`.
+  - will contain special methods inside.
+  - wrapping all the 'custom' functions needed in this class. 
+- we want `Sorter` to generic as possible.
+
+---
+
+1. create new `Sorter.ts` file in "src". Cut the Sorter class into here.
+   1. make sure you add `export`
+2. create the `NumbersCollection.ts` in 'src'.
+```typescript
+export class NumbersCollection {
+  data: number[];
+
+  constructor(data: number[]) {
+    this.data = data
+  }
+}
+```
+3. want to replace `(this.collection[j] > this.collection[j + 1])` with the `compare()` method, and decide if they need to be swapped. 
+> If true, then swap needs to occur. If false, no swap.
+```typescript
+  compare(leftIndex: number, rightIndex: number): boolean {
+    return this.data[leftIndex] > this.data[rightIndex];
+  }
+```
+4. need to change the `const {length} = this.collection`. Can be done by using a [Getter/Setter](https://www.typescriptlang.org/docs/handbook/2/classes.html#getters--setters).
+   1. done by adding `get` in front of the method. Can now call the method as a property.
+```typescript
+export class NumbersCollection {
+  data: number[];
+
+  constructor(data: number[]) {
+    this.data = data
+  }
+
+  get length(): number {
+    return this.data.length;
+  }
+
+  compare(leftIndex: number, rightIndex: number): boolean {
+    return this.data[leftIndex] > this.data[rightIndex];
+  }
+
+  swap(leftIndex: number, rightIndex: number): void {
+    const leftHand = this.data[leftIndex];
+    this.data[leftIndex] = this.data[rightIndex];
+    this.data[rightIndex] = leftHand;
+  }
+}
+
+const collection = new NumbersCollection([1,2,3]);
+
+console.log(collection.length); // 3
+``` 
+5. Now need to import  `NumbersCollection` inside the `Sorter`
+```typescript
+import { NumbersCollection } from './NumbersCollection';
+
+export class Sorter {
+  constructor(public collection: NumbersCollection ) {}
+  
+  sort(): void {
+    const { length } = this.collection;
+
+    for(let i = 0; i < length; i++) {
+      for(let j = 0; j < length - i - 1; j++) {
+        if(this.collection.compare(j, j+1)) {         
+          this.collection.swap(j, j+1);
+        }
+      }
+    } 
+  }
+}
+```
+6. import the `Sorter` and `NumbersCollection` into the `index.ts`.
+```typescript
